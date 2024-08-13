@@ -1,36 +1,61 @@
 /// <reference types="@workadventure/iframe-api-typings" />
 
-import { bootstrapExtra } from "@workadventure/scripting-api-extra";
+
+//import {parseCronExpression} from "cron-schedule";
+//import {TimerBasedCronScheduler as scheduler} from "cron-schedule/schedulers/timer-based.js";
 
 console.log('Script started successfully');
 
-let currentPopup: any = undefined;
+
 
 // Waiting for the API to be ready
 WA.onInit().then(() => {
     console.log('Scripting API ready');
-    console.log('Player tags: ',WA.player.tags)
 
-    WA.room.area.onEnter('clock').subscribe(() => {
-        const today = new Date();
-        const time = today.getHours() + ":" + today.getMinutes();
-        currentPopup = WA.ui.openPopup("clockPopup", "It's " + time, []);
-    })
+    // Julia custom
 
-    WA.room.area.onLeave('clock').subscribe(closePopup)
+    // At 19:00, turn on night
+    //const cronStartNight = parseCronExpression('0 19 * * *');
+    //scheduler.setInterval(cronStartNight, () => {
+        //WA.room.showLayer("night");
+        //WA.room.showLayer("light");
+    //});
 
-    // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure
-    bootstrapExtra().then(() => {
-        console.log('Scripting API Extra ready');
+    // At 7:00, turn on day
+    //const cronStartDay = parseCronExpression('0 7 * * *');
+    //scheduler.setInterval(cronStartDay, () => {
+        //WA.room.hideLayer("night");
+        //WA.room.hideLayer("light");
+    //});
+
+    // If the player enters the room between 19:00 and 7:00, turn on night
+    //const date = new Date();
+    //const startNight = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 19, 0, 0);
+    //const startDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 7, 0, 0);
+    //console.log(startDay)
+    //console.log(startNight)
+    //console.log(date)
+    //console.log(date < startNight)
+    //console.log(date > startDay)
+    //console.log(date < startNight && date > startDay)
+    //if (date < startNight && date > startDay) {
+        
+        //WA.room.hideLayer("night");
+        //WA.room.hideLayer("light");
+        
+    //}
+
+    // Julia custom
+    WA.room.onEnterLayer("rooms_floor").subscribe(() => {
+        WA.room.hideLayer("facade");
+      });
+      
+    WA.room.onLeaveLayer("rooms_floor").subscribe(() => {
+        WA.room.showLayer("facade");
+      });
+
+
     }).catch(e => console.error(e));
 
-}).catch(e => console.error(e));
-
-function closePopup(){
-    if (currentPopup !== undefined) {
-        currentPopup.close();
-        currentPopup = undefined;
-    }
-}
 
 export {};
