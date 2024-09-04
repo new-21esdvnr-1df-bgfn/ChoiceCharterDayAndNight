@@ -2572,7 +2572,7 @@
         {
          "name":"mapDescription",
          "type":"string",
-         "value":"Welcome to the Choice Charter school virtual campus!\n\nTo find out more about our school visit our website at www.choicecharterschool.org. For general questions please email:\n\ninfo@choicecharterschool.orgCEO\n\nDr. Cynthia Knight\n\ndr.knight@choicecharterschool.orgPrincipal\n\nCharles Mausser\n\ncmausser@choicecharterschool.orgUX Director\n\nMarcia Powell\n\nmpowell@choicecharterschool.orgRegistrar\n\nLori Knight\n\nlknight@choicecharterschool.orgOur mailing address is:\n\nPO Box 193\n\nUnion IA, 50258Phone: (515) 850 2545\n"
+         "value":"Welcome to the Choice Charter school virtual campus!\n\nTo find out more about our school visit our website at www.choicecharterschool.org. For general questions please email:\ninfo@choicecharterschool.org\n\nCEO\nDr. Cynthia Knight\ndr.knight@choicecharterschool.orgPrincipal\n\nUX Director\nMarcia Powell\nmpowell@choicecharterschool.org\n\nRegistrar\nLori Knight\nlknight@choicecharterschool.org\n\nOur mailing address is:\nPO Box 193\nUnion IA, 50258\nPhone: (515) 850 2545"
         }, 
         {
          "name":"mapImage",
