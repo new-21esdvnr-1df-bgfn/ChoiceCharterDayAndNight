@@ -9,7 +9,7 @@
       "DOM"
     ],
     "allowJs": true,
-    "moduleResolution": "Node16",
+    "moduleResolution": "Node",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
