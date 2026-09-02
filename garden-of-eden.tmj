@@ -1126,7 +1126,7 @@
         {
          "name":"mapCopyright",
          "type":"string",
-         "value":"Garden of Eden is the sole property of 100 Roads Inc. All rights are reserved by 100 Roads inc. All contents of the map may not be reproduced, distributed (for sale or otherwise), or create derivative works of the copyrighted work without the express written permission of 100 Roads Inc."
+         "value":"Garden of Eden is the sole property of DigiPie Design. All rights are reserved by DigiPie Design. All contents of the map may not be reproduced, distributed (for sale or otherwise), or create derivative works of the copyrighted work without the express written permission of DigiPie Design."
         }, 
         {
          "name":"mapDescription",
@@ -1151,7 +1151,7 @@
         {
          "name":"tilesetCopyright",
          "type":"string",
-         "value":"This map is the sole property of 100 Roads Inc. All rights are reserved by 100 Roads inc. All contents of the map may not be reproduced, distributed (for sale or otherwise), or create derivative works of the copyrighted work without the express written permission of 100 Roads Inc."
+         "value":"This map is the sole property of DigiPie Design. All rights are reserved by DigiPie Design. All contents of the map may not be reproduced, distributed (for sale or otherwise), or create derivative works of the copyrighted work without the express written permission of DigiPie Design."
         }],
  "renderorder":"right-down",
  "tiledversion":"1.11.0",
