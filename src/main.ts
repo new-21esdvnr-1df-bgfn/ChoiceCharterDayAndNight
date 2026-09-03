@@ -1,17 +1,18 @@
 /// <reference types="@workadventure/iframe-api-typings" />
 import { trackPresence } from "./tracking";
-
+import { enforceOpeningHours } from "./closing";
 
 //import {parseCronExpression} from "cron-schedule";
 //import {TimerBasedCronScheduler as scheduler} from "cron-schedule/schedulers/timer-based.js";
-
-console.log('Script started successfully');
 
 
 
 // Waiting for the API to be ready
 WA.onInit().then(() => {
     console.log('Scripting API ready');
+
+    // Closed outside opening hours (see closing.ts); stop here if redirected.
+    if (!enforceOpeningHours()) return;
 
     // Julia custom
 

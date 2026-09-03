@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choice Charter School — Campus Closed</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: linear-gradient(180deg, #0b1026 0%, #1a2151 60%, #2b3a67 100%);
+    color: #eef1fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .card {
+    max-width: 560px;
+    width: 100%;
+    background: rgba(10, 14, 40, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 48px 36px;
+    backdrop-filter: blur(6px);
+  }
+  .moon { font-size: 64px; line-height: 1; }
+  h1 { font-size: 28px; margin: 18px 0 8px; font-weight: 600; }
+  .sub { color: #aab3d6; font-size: 16px; margin-bottom: 16px; }
+  .sub strong { color: #ffb347; font-weight: 600; }
+  .hours {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 179, 71, 0.35);
+    border-radius: 14px;
+    padding: 14px 28px;
+    margin-bottom: 28px;
+  }
+  .hours .hours-label {
+    color: #ffb347;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .hours .hours-time { font-size: 24px; font-weight: 600; }
+  .hours .hours-tz { color: #aab3d6; font-size: 13px; margin-top: 4px; }
+  .countdown-label { color: #aab3d6; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+  .countdown { font-size: 40px; font-variant-numeric: tabular-nums; font-weight: 600; margin: 6px 0 30px; }
+  a.enter {
+    display: none;
+    background: #ffb347;
+    color: #1a2151;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 14px 34px;
+    border-radius: 999px;
+  }
+  a.enter.visible { display: inline-block; }
+  .note { color: #7f89b3; font-size: 13px; margin-top: 26px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="moon">🌙</div>
+    <h1>The campus is closed</h1>
+    <p class="sub">Choice Charter School's virtual campus is open during <strong>these hours</strong>:</p>
+    <div class="hours">
+      <div class="hours-time">4:00&nbsp;AM&nbsp;&nbsp;–&nbsp;&nbsp;11:50&nbsp;PM</div>
+      <div class="hours-tz">Iowa time (Central)</div>
+    </div>
+    <div class="countdown-label">Campus opens in</div>
+    <div class="countdown" id="countdown">--:--:--</div>
+    <a class="enter" id="enter" href="#">Enter campus</a>
+    <p class="note" id="note">You'll be taken back to the campus automatically when it opens.</p>
+  </div>
+
+<script>
+(function () {
+  var OPEN_MINUTES = 4 * 60;         // 04:00 CT
+  var CLOSE_MINUTES = 23 * 60 + 50; // 23:50 CT
+
+  var params = new URLSearchParams(window.location.search);
+  // ?preview forces the closed view so the page can be reviewed during open hours.
+  var preview = params.has("preview");
+
+  var backUrl = null;
+  try {
+    var param = params.get("back");
+    if (param) {
+      var u = new URL(param);
+      // Only ever navigate back to a WorkAdventure room.
+      if (u.protocol === "https:") backUrl = u.toString();
+    }
+  } catch (e) { /* no valid back URL */ }
+
+  var enterLink = document.getElementById("enter");
+  var note = document.getElementById("note");
+  if (backUrl) {
+    enterLink.href = backUrl;
+  } else {
+    note.hidden = true;
+  }
+
+  // Iowa (America/Chicago) wall-clock time, regardless of the visitor's timezone.
+  var fmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Chicago",
+    hour: "2-digit", minute: "2-digit", second: "2-digit",
+    hour12: false
+  });
+
+  function iowaSeconds() {
+    var p = {};
+    fmt.formatToParts(new Date()).forEach(function (part) { p[part.type] = part.value; });
+    return (Number(p.hour) % 24) * 3600 + Number(p.minute) * 60 + Number(p.second);
+  }
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function tick() {
+    var now = iowaSeconds();
+    var openS = OPEN_MINUTES * 60;
+    var closeS = CLOSE_MINUTES * 60;
+    var isOpen = !preview && now >= openS && now < closeS;
+
+    if (isOpen) {
+      document.getElementById("countdown").textContent = "00:00:00";
+      if (backUrl) {
+        window.location.href = backUrl;
+      } else {
+        note.textContent = "The campus is open now! Come in through your usual campus link.";
+      }
+      return;
+    }
+
+    var remaining = now < openS ? openS - now : 24 * 3600 - now + openS;
+    document.getElementById("countdown").textContent =
+      pad(Math.floor(remaining / 3600)) + ":" + pad(Math.floor((remaining % 3600) / 60)) + ":" + pad(remaining % 60);
+
+    if (backUrl) enterLink.classList.remove("visible");
+    setTimeout(tick, 1000);
+  }
+
+  tick();
+})();
+</script>
+</body>
+</html>
