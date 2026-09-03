@@ -9,7 +9,7 @@
       "DOM"
     ],
     "allowJs": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
