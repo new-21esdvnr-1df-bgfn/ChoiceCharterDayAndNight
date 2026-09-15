@@ -4,7 +4,7 @@
 // console to tell which code is live — WorkAdventure can take a while to serve
 // a fresh deployment. All CharterVerse repos should carry the same script
 // version, but they can drift temporarily while a change rolls out repo by repo.
-export const SCRIPT_VERSION = "1.0";
+export const SCRIPT_VERSION = "1.1";
 
 console.log(`Script started successfully (version ${SCRIPT_VERSION})`);
 
